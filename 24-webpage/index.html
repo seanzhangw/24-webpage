@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game of 24</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
     <main>
@@ -23,60 +25,89 @@
             </div>
         </nav>
         <hr>
-        
+
         <section id="title" class="section">
             <div class="container">
                 <h1>Game of 24</h1>
-                <h2>Sean Zhang (swz9), ..., ...</h2>
-
-                <iframe src="https://www.youtube.com/embed/VIDEO_ID" width="560" height="315" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <h2>Sean Zhang (swz9), Ray Chang (cc2246), Shizhe Shen
+                    (ss4335)<h2>
+                        <iframe src="https://www.youtube.com/embed/VIDEO_ID" width="560" height="315" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                        <figcaption>Demonstration Video</figcaption>
             </div>
         </section>
-        <section id="introduction" class="section">
+        <section id=" introduction" class="section">
             <div class="container">
                 <h2>Project Introduction</h2>
-                <p>Introduction.</p>
-                <p>P2</p>
+                <p>Our recreation of the Game of 24 recreates the classic arcade experience with a custom interface that
+                    blends nostalgic gameplay with a user-experience focused design.</p>
+                <p>The Game of 24 is a classic mathematical puzzle where players must use four given numbers and basic
+                    arithmetic operations (+, -, *, /) to form an expression that equals 24. Traditionally the game is
+                    played with a deck of cards, where each turn the players will draw four random cards and compete for
+                    the fastest speed to calculate to 24. Instead of racing to solve a single round, our implementation
+                    tracks the number of collections solved within a configurable time interval.</p>
+                <p>The arcade experience is curated with a custom built joystick-based
+                    controller, retro-style graphics with the VGA screen, and a persistent leaderboard stored in
+                    non-volatile memory. The game is player vs player similar to the
+                    versus style arcade games. Difficulty can be adjusted at run-time and a group of 4 numbers of the
+                    suitable difficulty are calculated at runtime. Card dealing, flipping animations and sound feedback
+                    contribute to the immersive experience.</p>
             </div>
         </section>
 
         <section id="high-level-design" class="section">
             <div class="container">
                 <h2>High Level Design</h2>
-                <p>high level design</p>
-                <p>P2</p>
+                <p>Rationale and sources of your project idea
+                    background math
+                    logical structure
+                    hardware/software tradeoffs
+                    Discuss existing patents, copyrights, and trademarks which are relevant to your project.</p>
             </div>
         </section>
 
         <section id="software-design" class="section">
             <div class="container">
                 <h2>Software Design</h2>
-                <p>software design</p>
-                <p>P2</p>
+                <p>program details. What parts were tricky to write?
+                    Be sure to specifically reference any design or code you used from someone else.
+                    Things you tried which did not work</p>
             </div>
         </section>
 
         <section id="hardware-design" class="section">
             <div class="container">
                 <h2>Hardware Design</h2>
-                <p>hardware design</p>
-                <p>P2</p>
+                <p>Hardware details. Could someone else build this based on what you have written?</p>
+                <p>Be sure to specifically reference any design or code you used from someone else.
+                    Things you tried which did not work</p>
             </div>
         </section>
 
         <section id="results" class="section">
             <div class="container">
                 <h2>Results</h2>
-                <p>results</p>
-                <p>P2</p>
+                <p>Any and all test data, scope traces, waveforms, etc
+                    speed of execution (hesitation, filcker, interactiveness, concurrency)
+                    accuracy (numeric, music frequencies, video signal timing, etc)
+                    how you enforced safety in the design.
+                    usability by you and other people</p>
             </div>
         </section>
 
         <section id="conclusions" class="section">
             <div class="container">
                 <h2>Conclusions</h2>
-                <p>conclusions</p>
-                <p>P2</p>
+                <p>Analyse your design in terms of how the results met your expectations. What might you do differently
+                    next time?
+                    How did your design conform to the applicable standards?
+                    Intellectual property considerations.
+                    Did you reuse code or someone else's design? Did you use any of Altera's IP?
+                    Did you use code in the public domain?
+                    Are you reverse-engineering a design? How did you deal with patent/trademark issues?
+                    Did you have to sign non-disclosure to get a sample part?
+                    Are there patent opportunites for your project?</p>
             </div>
         </section>
 
@@ -100,10 +131,10 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
+
                 window.scrollTo({
                     top: targetElement.offsetTop - 70, // Offset for navbar height
                     behavior: 'smooth'
@@ -112,21 +143,21 @@
         });
 
         // Highlight active section in navbar
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const sections = document.querySelectorAll('.section');
             const navLinks = document.querySelectorAll('.nav-links a');
-            
+
             let currentSection = '';
-            
+
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 const sectionHeight = section.clientHeight;
-                
+
                 if (pageYOffset >= sectionTop - 100) {
                     currentSection = section.getAttribute('id');
                 }
             });
-            
+
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href').substring(1) === currentSection) {
@@ -136,4 +167,5 @@
         });
     </script>
 </body>
+
 </html>
