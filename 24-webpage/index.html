@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of 24</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <main>
+        <nav id="navbar">
+            <div style="font-size: 1.5rem; text-align: center;">
+                <ul class="nav-links" style="display: flex; justify-content: center; gap: 20px;">
+                    <li><a href="#introduction" style="font-size: 1.2rem;">Introduction</a></li>
+                    <li><a href="#high-level-design" style="font-size: 1.2rem;">High Level Design</a></li>
+                    <li><a href="#software-design" style="font-size: 1.2rem;">Software Design</a></li>
+                    <li><a href="#hardware-design" style="font-size: 1.2rem;">Hardware Design</a></li>
+                    <li><a href="#results" style="font-size: 1.2rem;">Results</a></li>
+                    <li><a href="#conclusions" style="font-size: 1.2rem;">Conclusions</a></li>
+                    <li><a href="#appendix" style="font-size: 1.2rem;">Appendix</a></li>
+                </ul>
+            </div>
+        </nav>
+        <hr>
+        
+        <section id="title" class="section">
+            <div class="container">
+                <h1>Game of 24</h1>
+                <h2>Sean Zhang (swz9), ..., ...</h2>
+
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID" width="560" height="315" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+        <section id="introduction" class="section">
+            <div class="container">
+                <h2>Project Introduction</h2>
+                <p>Introduction.</p>
+                <p>P2</p>
+            </div>
+        </section>
+
+        <section id="high-level-design" class="section">
+            <div class="container">
+                <h2>High Level Design</h2>
+                <p>high level design</p>
+                <p>P2</p>
+            </div>
+        </section>
+
+        <section id="software-design" class="section">
+            <div class="container">
+                <h2>Software Design</h2>
+                <p>software design</p>
+                <p>P2</p>
+            </div>
+        </section>
+
+        <section id="hardware-design" class="section">
+            <div class="container">
+                <h2>Hardware Design</h2>
+                <p>hardware design</p>
+                <p>P2</p>
+            </div>
+        </section>
+
+        <section id="results" class="section">
+            <div class="container">
+                <h2>Results</h2>
+                <p>results</p>
+                <p>P2</p>
+            </div>
+        </section>
+
+        <section id="conclusions" class="section">
+            <div class="container">
+                <h2>Conclusions</h2>
+                <p>conclusions</p>
+                <p>P2</p>
+            </div>
+        </section>
+
+        <section id="appendix" class="section">
+            <div class="container">
+                <h2>Appendix</h2>
+                <p>appendix</p>
+                <p>P2</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; Game of 24</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navbar links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70, // Offset for navbar height
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Highlight active section in navbar
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 100) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
