@@ -111,14 +111,66 @@
                     (4-bit color). The right shift by 1 effectively divides the index by 2, converting the pixel index
                     to a byte index.
                 </p>
-                <h3>Flip Animation Math</h3>
-                <p>Sean</p>
+                <h3>Flip Animation</h3>
+                <p>
+                    The flip animation is based off of the following image. During the first half of the flip, the image
+                    will be stretched to a trapezoid shape with the left edge as the longer base and the right edge as
+                    the shorter base. The height of the trapezoid will decrease as the flip progress approaches the
+                    halfway point. The trapezoid will then be inversed and the right edge will become the longer base
+                    and the left edge will become the shorter base. The height of the trapezoid will increase as the
+                    flip progresses to the end of the animation.
+                </p>
+                <!-- NOTE: @Ray, @Damian don't copy this code for other images, it will cut off the top 1/4th of ur image -->
+                <div style="display: flex; justify-content: center;">
+                    <img src="assets/flip-card.png" alt="Flip Animation" class="flip-animation"
+                        style="object-fit: cover; object-position: top; height: 350px; width: auto; clip-path: inset(15% 0 0 0);">
+                </div>
+                <figcaption>Flip Animation</figcaption>
+                <p>
+                    The trapezoid is split into the upper right triangle, lower right triangle, and the central
+                    rectangle. Parameters such as the height of the left and right bases and the width of the trapezoid,
+                    are mapped to values based on the progress of the flip. The top triangle is drawn with the below
+                    code. The <code>drawHLineCustom(..)</code> function is based
+                    off of the <code>drawHLine(..)</code> function in the VGA library. Instead, it draws a custom asset
+                    instead of a solid color. The triangle is drawn starting from the top left of the triangle. As the
+                    loop iterates,
+                    horizontal lines are drawn from the left edge to the right edge of the triangle. The length of the
+                    line drawn is dependent on the <code>accumulator</code> variable. The <code>accumulator</code> is
+                    accumulated by <code>triangleStep</code>, which is the
+                    the quotient between the trapezoid height and the triangle base. This is effectively the slope of
+                    the triangle's hypotenuse. The <code>x_offset</code> addition is used to shift the triangle to the
+                    right as the trapezoid's height decreases.
+                </p>
+                <script src="https://gist.github.com/seanzhangw/832dc650947679014741883355aeac84.js"></script>
+                <div style="text-align: center;">
+                    <img src="assets/flip_visualized_grid.drawio.png" alt="mac_address"
+                        style="max-width: 50%; height: auto;">
+                    <figcaption>Drawing Top Triangle and Flip Parameters</figcaption>
+                </div>
+                <p>
+                    The middle rectangle is drawn with the line
+                    <code>pasteImage(top_image, image_height, trapezoid_height / 2, x + x_offset, y, bg)</code>.
+                    <code>top_image</code> is a pointer to the asset. The <code>image_height</code> is the height of
+                    the asset. The <code>x + x_offset</code> and <code>y</code> arguments are the top left x and y
+                    coordinates of the image to paste.
+                </p>
+                <p>
+                    The bottom triangle is drawn with similar logic to the top triangle. Since we still draw from the
+                    top left of the triangle, the accumulator starts at the full <code>trapezoid_height</code> and
+                    decreases.
+                </p>
+                <script src="https://gist.github.com/seanzhangw/a22cfcbb26e40e85151f638b2ffa4106.js"></script>
+                <figcaption>Drawing Bottom Triangle Code</figcaption>
 
+                <p>
+                    During the second half of the flip, the same logic largely applies. The right base of the trapezoid
+                    grows while the left base shrinks. The trapezoid's height increases instead of decreasing.
+                </p>
                 <h3>Hardware/Software Tradeoffs</h3>
             </div>
         </section>
 
-        <section id=" software-design" class="section">
+        <section id="software-design" class="section">
             <div class="container">
                 <h2>Software Design</h2>
                 <p>program details. What parts were tricky to write?
