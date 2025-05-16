@@ -1,1 +1,2 @@
-# Game of 24 Writeup
+# Game of 24
+
