@@ -31,9 +31,11 @@
                 <h1>Game of 24</h1>
                 <h2>Sean Zhang (swz9), Ray Chang (cc2246), Shizhe Shen
                     (ss4335)<h2>
-                        <iframe src="https://www.youtube.com/embed/VIDEO_ID" width="560" height="315" frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+                        <iframe width="560" height="315"
+                            src="https://www.youtube.com/embed/oUg7xzAIQH0?si=7GXE5viiB2rXxfLU"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <figcaption>Demonstration Video</figcaption>
             </div>
         </section>
@@ -59,15 +61,64 @@
         <section id="high-level-design" class="section">
             <div class="container">
                 <h2>High Level Design</h2>
-                <p>Rationale and sources of your project idea
-                    background math
-                    logical structure
-                    hardware/software tradeoffs
+                <p>Rationale and sources of your project idea,
+                    background math,
+                    logical structure,
+                    hardware/software tradeoffs,
                     Discuss existing patents, copyrights, and trademarks which are relevant to your project.</p>
+                <h3>Rationale Behind Implementing the Game of 24</h3>
+                <p>whoever</p>
+                <h3>Generating Solutions with a Set Difficulty at Runtime</h3>
+
+                <p>Damian</p>
+
+                <h3>Efficiently Drawing Images to the VGA Screen</h3>
+                <p>
+                    Images are needed for displaying cards and the 24-logo.
+                </p>
+                <p>
+                    A Python script that converts an image into a 2D C array suitable for VGA
+                    rendering. This script uses the Python Imaging Library (PIL) to open the image, resize it according
+                    to specified width and height ratios, and then iterates over each pixel. For each pixel, it
+                    maps its RGB values to a corresponding 4-bit color value. The resulting 2D array stores
+                    these color values, and the
+                    script outputs the array in a format directly compatible with C, making it ready for use in VGA
+                    rendering.
+                </p>
+                <p>
+                    Initially, we displayed assets on the VGA screen by iterating through each 2D C array, calculating,
+                    and
+                    setting each pixel individually by setting the upper 4 or lower 4 bits of the
+                    <code>vga_data_array</code>.
+                    However, this approach proved too slow when sliding or flipping the image.
+                </p>
+                <p>
+                    To optimize, we leveraged the fact that each row of the 2D array is memory-aligned. By using
+                    <code>memcpy</code>,
+                    we
+                    can copy entire rows at once, achieving 32-bit transfers—effectively drawing 8 pixels at a time.
+                    This
+                    method provides an 8x speed improvement.
+                </p>
+                <p>
+                    Given a desired <code>x</code>, <code>y</code> position and the current row <code>i</code> of the
+                    asset we are trying to copy, the index in the <code>vga_data_array</code> to begin copying to is
+                    calculated as
+                    <code>vga_index = ((y + i) * 640 + x) >> 1</code>. The <code>(y + i) * 640</code> calculates the
+                    starting index of the ith row for a 640-pixel wide screen. The addition of <code>x</code> shifts the
+                    position from the left edge of the screen to the desired x-coordinate. The right shift by 1
+                    operation is required because each byte in the <code>vga_data_array</code> can store two pixels
+                    (4-bit color). The right shift by 1 effectively divides the index by 2, converting the pixel index
+                    to a byte index.
+                </p>
+                <h3>Flip Animation Math</h3>
+                <p>Sean</p>
+
+                <h3>Hardware/Software Tradeoffs</h3>
             </div>
         </section>
 
-        <section id="software-design" class="section">
+        <section id=" software-design" class="section">
             <div class="container">
                 <h2>Software Design</h2>
                 <p>program details. What parts were tricky to write?
