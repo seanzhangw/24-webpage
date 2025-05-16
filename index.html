@@ -93,9 +93,6 @@
                 <h3>Algorithm for Generating Solutions</h3>
                 <p>Damian</p>
 
-                <h3>Sound</h3>
-                <p>Damian</p>
-
                 <h3>Efficiently Drawing Images to the VGA Screen</h3>
                 <p>
                     Images are needed for displaying cards and the 24-logo.
@@ -191,6 +188,55 @@
                     grows while the left base shrinks. The trapezoid's height increases instead of decreasing.
                 </p>
 
+                <h3>Sound Effects</h3>
+                <p>
+                    We incorporated sound effects into the 24-point card game, improving input feedback and immersion.
+                    Key
+                    moments were mapped to distinct audio cues such as start menu and card selections, card dealing, and
+                    flipping.
+                </p>
+                <p>
+                    While the DDS-based method in that file worked for simple tones, it was unsuitable for realistic
+                    sound
+                    effects. Instead, .wav files—originally sourced as .mp3, trimmed for timing, were converted into C
+                    arrays for inclusion in header files. These assets could then be triggered from the animation logic.
+                </p>
+                <p>
+                    The initial playback method used a timer interrupt with SPI, which worked well when tested in
+                    isolation
+                    through serial-triggered playback. However, once integrated with the main animation code, the high
+                    interrupt frequency (8–44 kHz) conflicted with timing functions like sleep_us(), resulting in frame
+                    delays and visual stuttering. Additionally, SPI transfers suffered from jitter under load, causing
+                    popping artifacts and inconsistent playback.
+                </p>
+                <p>
+                    After consulting with our instructor, Hunter Adams, a DMA-based method using Lab 1’s e_DMA_demo as a
+                    starting point. This resolved the timing issues by offloading audio streaming from the CPU. During
+                    early
+                    testing, I encountered silence due to a mismatch in audio output channels—beep_beep.c used channel
+                    B,
+                    while dma_demo.c defaulted to channel A. Once corrected, the DMA method produced clean,
+                    uninterrupted
+                    audio.
+                </p>
+                <p>
+                    Moreover, DMA enabled a solution to another limitation: memory overflow when embedding long sound
+                    clips.
+                    By splitting .wav files into smaller fragments and using chained DMA descriptors, I could loop short
+                    buffers to simulate longer sounds without exceeding memory constraints—something timer-based methods
+                    couldn’t handle.
+                </p>
+                <p>
+                    Finally, sound was integrated into the core gameplay logic. Some animations, like card dealing, were
+                    implemented within infinite loops and used flag-based control. Naïvely calling sound triggers within
+                    these loops caused repeated DMA reconfigurations. To prevent this, we added logic to play each sound
+                    once at the start of an animation sequence, suppressing repeated triggers until the animation
+                    completed.
+                    Additionally, to preserve sound quality, we adjusted the DMA sampling rate for each clip based on
+                    its
+                    original audio. For example, the flipping sound required ~11.025 kHz instead of the default ~44
+                    kHz..
+                </p>
                 <h3>Game Code Structure</h3>
                 <p>
                     The game software is split across two cores. Within both cores, two threads handle inputs and VGA
@@ -460,7 +506,7 @@
                 </p>
                 <h3>Appendix C: Hardware</h3>
                 <p>
-                    See hardware design section.
+                    See hardware design section for schematics.
                 </p>
                 <h3>Appendix D: Work Distribution</h3>
                 <p>
