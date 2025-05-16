@@ -393,17 +393,32 @@
         <section id="results" class="section">
             <div class="container">
                 <h2>Results</h2>
-                <p>The results of our project are entirely evaluated by playing the game. The effectiveness of the game
-                    engine is evaluated based on the “feel” of gameplay: responsiveness, apparent smoothness of
-                    animation, proper timing, etc. A notable issue we were unable to resolve, mostly due to time
-                    constraints, is that the characters flickered on the screen when moved. While annoying, we did not
-                    think this hindered player experience enough to be worth fixing since we did not have a clear,
-                    simple solution defined. Otherwise, we were able to implement all character movement and interaction
-                    with the environment as we had originally planned, mostly based on the functionalities of the
-                    original game. Accuracy of sound output is also easy to subjectively evaluate. It is very noticeable
-                    when things sound incorrect. Fortunately, the sound effects and background music in the final game
-                    worked as expected. Visual assets were also subjectively evaluated by ourselves. Since we were not
-                    expressly held to copying designs exactly we could make things look however we wanted.</p>
+                <p>Any and all test data, scope traces, waveforms, etc
+                    speed of execution (hesitation, filcker, interactiveness, concurrency)
+                    accuracy (numeric, music frequencies, video signal timing, etc)
+                    how you enforced safety in the design.
+                    usability by you and other people</p>
+
+                <p>
+                    The success of our implementation of the Game of 24 project is primarily evaluated through direct
+                    gameplay. We assessed the game based on the responsiveness of player input, the
+                    smoothness of animations, and how intuitive the game controls were. For the latter, we had
+                    independent play testers give feedback on the gameplay experience.
+                </p>
+                <p>
+                    Due to our multi-core architecture, we ran into some issues with concurrency. In the start menu,
+                    multiple setting parameters could be highlighted and selected at once due to the start menu being
+                    modifiable by both players. We resolved this by using a mutex spinlock to ensure that only one
+                    player
+                    could modify the start menu at a time.
+                </p>
+                <p>
+                    Our core gameplay mechanics, including player input handling, card
+                    flipping animations, and real-time score tracking, functioned as expected. Sound effects were also
+                    carefully evaluated, with all audio cues accurately synchronizing to in-game actions, contributing
+                    to the
+                    arcade-like atmosphere of the game.
+                </p>
             </div>
         </section>
 
