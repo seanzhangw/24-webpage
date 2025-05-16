@@ -67,9 +67,37 @@
                     hardware/software tradeoffs,
                     Discuss existing patents, copyrights, and trademarks which are relevant to your project.</p>
                 <h3>Rationale Behind Implementing the Game of 24</h3>
-                <p>whoever</p>
-                <h3>Generating Solutions with a Set Difficulty at Runtime</h3>
+                <p>We chose the Game of 24 because it’s a fun, classic puzzle that we personally enjoy, and it offered a
+                    great mix of hardware and software challenges. It allowed us to go beyond a basic game, turning it
+                    into a feature-rich product with a custom interface, optimized performance, and room for additional
+                    features. This project gave us the freedom to transform a simple concept into a polished,
+                    well-developed game.</p>
 
+                <h3>Hardware/Software Tradeoffs</h3>
+                <p>
+                    Our implementation of the Game of 24 uses both cores on the microcontroller, with each
+                    core dedicated to managing the gameplay experience for each player.</p>
+                <p>
+                    On the hardware side, each core of the microcontroller is tasked with managing the joystick input,
+                    rendering animations, and updating the VGA display for its assigned player. This parallel processing
+                    ensures that each player’s actions are processed without interference, providing a smooth and
+                    responsive
+                    experience. The use of multiple cores for real-time input and display updates significantly reduces
+                    latency and allows both players to interact simultaneously without any noticeable delay.
+                    However, this multi-core approach introduces some software complexity. For shared memory,
+                    concurrency protection mechanisms such as locks and semaphores are used to prevent any undefined
+                    behavior.
+                </p>
+            </div>
+        </section>
+
+        <section id="software-design" class="section">
+            <div class="container">
+                <h2>Software Design</h2>
+                <h3>Algorithm for Generating Solutions</h3>
+                <p>Damian</p>
+
+                <h3>Sound</h3>
                 <p>Damian</p>
 
                 <h3>Efficiently Drawing Images to the VGA Screen</h3>
@@ -166,16 +194,8 @@
                     During the second half of the flip, the same logic largely applies. The right base of the trapezoid
                     grows while the left base shrinks. The trapezoid's height increases instead of decreasing.
                 </p>
-                <h3>Hardware/Software Tradeoffs</h3>
-            </div>
-        </section>
 
-        <section id="software-design" class="section">
-            <div class="container">
-                <h2>Software Design</h2>
-                <p>program details. What parts were tricky to write?
-                    Be sure to specifically reference any design or code you used from someone else.
-                    Things you tried which did not work</p>
+                <h3>Game Code Structure</h3>
             </div>
         </section>
 
