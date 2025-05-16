@@ -393,11 +393,11 @@
         <section id="results" class="section">
             <div class="container">
                 <h2>Results</h2>
-                <p>Any and all test data, scope traces, waveforms, etc
+                <!-- <p>Any and all test data, scope traces, waveforms, etc
                     speed of execution (hesitation, filcker, interactiveness, concurrency)
                     accuracy (numeric, music frequencies, video signal timing, etc)
                     how you enforced safety in the design.
-                    usability by you and other people</p>
+                    usability by you and other people</p> -->
 
                 <p>
                     The success of our implementation of the Game of 24 project is primarily evaluated through direct
@@ -418,6 +418,12 @@
                     carefully evaluated, with all audio cues accurately synchronizing to in-game actions, contributing
                     to the
                     arcade-like atmosphere of the game.
+                </p>
+
+                <p>
+                    We validated that we generated valid solutions of a set difficulty using an online 24 solver (see
+                    Appendix E). Each of our generated solutions was verified to be solvable with a set number of
+                    solutions that matched the difficulty level.
                 </p>
             </div>
         </section>
@@ -440,8 +446,72 @@
         <section id="appendix" class="section">
             <div class="container">
                 <h2>Appendicies</h2>
-                <p>appendix</p>
-                <p>P2</p>
+                <h3>Appendix A</h3>
+                <p>
+                    The group approves this report for inclusion on the course website.
+                </p>
+                <p>
+                    The group approves the video for inclusion on the course youtube channel.
+                </p>
+                <h3>Appendix B: Software</h3>
+                <p>
+                    The code for this project is available on GitHub <a href="https://github.com/seanzhangw/24"
+                        target="_blank" rel="noopener">here</a>.
+                </p>
+                <h3>Appendix C: Hardware</h3>
+                <p>
+                    See hardware design section.
+                </p>
+                <h3>Appendix D: Work Distribution</h3>
+                <p>
+                    Ray worked on:
+                <ul>
+                    <li>Controller PCB design, layout, and assembly</li>
+                    <li>Interfacing with ADS 1115, EEPROM w/ I2C. </li>
+                    <li>Game Over, Leaderboard page design</li>
+                    <li>Python script for converting PNGs to 2D C arrays</li>
+                </ul>
+                </p>
+                <p>
+                    Sean worked on:
+                <ul>
+                    <li>Designing software architecture</li>
+                    <li>VGA Driver modifications for sliding, flipping cards and pasting images</li>
+                    <li>Start Menu, Game Playing page design</li>
+                    <li>Core game logic for main gameplay loop, handling player input, handling concurrency</li>
+                    <li>Integration</li>
+                </ul>
+                </p>
+                <p>
+                    Shizhe worked on:
+                <ul>
+                    <li>Converting MP3 audio files to C arrays</li>
+                    <li>Integrating sound effects into core game logic</li>
+                    <li>Controller PCB assembly</li>
+                    <li>Developed algorithm for generating card collections at a set difficulty level.</li>
+                </ul>
+                </p>
+                <h3>Appendix E: References</h3>
+                <p>Course References
+                <ul>
+                    <li>Course Website: <a href="https://ece4760.github.io/">ece4760.github.io</a></li>
+                    <li>RP2040 Demos: <a href="https://github.com/vha3/Hunter-Adams-RP2040-Demos">Example Code</a></li>
+                </ul>
+                </p>
+                <p>Datasheets & Documentation
+                <ul>
+                    <li>RP2040 C SDK: <a
+                            href="https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf">Datasheet</a>
+                    </li>
+                    <li>RP2040 Datasheet: <a
+                            href="https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf">Datasheet</a>
+                    </li>
+                </ul>
+                </p>
+                <p>Other References</p>
+                <ul>
+                    <li>24 Solver: <a href="http://24solver.us-west-2.elasticbeanstalk.com/">Link</a></li>
+                </ul>
             </div>
         </section>
     </main>

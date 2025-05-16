@@ -24,6 +24,7 @@ p {
     padding: 0 15px;
 }
 
+
 /* Header and Navigation */
 header {
     position: fixed;
@@ -106,6 +107,13 @@ h3 {
 
 #title h2 {
     font-weight: 350;
+}
+
+#appendix ul {
+    list-style: disc;
+    margin-left: 2em;
+    font-size: 1.5rem;
+    color: #555;
 }
 
 figcaption {
