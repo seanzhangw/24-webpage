@@ -61,11 +61,7 @@
         <section id="high-level-design" class="section">
             <div class="container">
                 <h2>High Level Design</h2>
-                <p>Rationale and sources of your project idea,
-                    background math,
-                    logical structure,
-                    hardware/software tradeoffs,
-                    Discuss existing patents, copyrights, and trademarks which are relevant to your project.</p>
+
                 <h3>Rationale Behind Implementing the Game of 24</h3>
                 <p>We chose the Game of 24 because it’s a fun, classic puzzle that we personally enjoy, and it offered a
                     great mix of hardware and software challenges. It allowed us to go beyond a basic game, turning it
@@ -196,26 +192,218 @@
                 </p>
 
                 <h3>Game Code Structure</h3>
+                <p>
+                    The game software is split across two cores. Within both cores, two threads handle inputs and VGA
+                    animations. On core 0, an additional thread waits for a semaphore signal to begin a serial listener
+                    for leaderboard inputs. On core 1, a timer callback ISR executes every second to decrease the
+                    seconds remaining during the main gameplay loop.
+                </p>
+                <div style="text-align: center;">
+                    <img src="assets/24-final-sw-logc.png" alt="mac_address" style="max-width: 100%; height: auto;">
+                    <figcaption>Code Organization</figcaption>
+                </div>
+                <p>
+                    The input thread in each core is responsible for reading the joystick inputs and button presses.
+                    Debouncing is implemented to make button presses and joystick inputs more reliable.
+                    Based on the current <code>gameState</code>, it will execute different actions based on the joystick
+                    and button inputs. For instance, if the game is in the <code>START_MENU</code> state, joystick and
+                    button inputs will set the game settings, or start the game based on the
+                    current selection of <code>curCol</code> or <code>curRow</code>. In the <code>GAME_PLAYING</code>
+                    state, inputs signal arithmetic operations, reset requests, or redealing a new set of cards. Inputs
+                    in the <code>GAME_OVER</code> state determine whether the player wants to save a score to the
+                    leaderboard.
+                </p>
+                <p>
+                    The animation thread in each core is responsible for rendering the game graphics on the VGA screen.
+                    Based on shared game flags and the <code>gameState</code>, the animation thread will draw the start
+                    menu, main game screen, or game over screens. Animations such as flipping cards and sliding cards
+                    are also handled within this thread.
+                </p>
+                <div style="text-align: center;">
+                    <img src="assets/start-menu.png" mac_address" style="max-width: 50%; height: auto;">
+                    <figcaption><code>START_MENU</code> screen</figcaption>
+                </div>
+                <div style="text-align: center;">
+                    <img src="assets/game-playing.png" mac_address" style="max-width: 50%; height: auto;">
+                    <figcaption><code>GAME_PLAYING</code> screen</figcaption>
+                </div>
+                <div style="text-align: center;">
+                    <img src="assets/game-over.png" mac_address" style="max-width: 50%; height: auto;">
+                    <figcaption><code>GAME_OVER</code> screen</figcaption>
+                </div>
+                <p>
+                    The leaderboard input thread within core 0 is essentially a serial listener that waits for
+                    input.
+                    Based on the player input, it will write a player name and score to EEPROM via I2C. This thread
+                    waits for a semaphore signal from the input handler thread to begin. The semaphore is signaled
+                    when
+                    the
+                    game is in the <code>GAME_OVER</code> state and the player has selected to save their score.
+                </p>
+                <p>
+                    The timer callback ISR in core 1 is responsible for updating the game timer. It executes every
+                    second
+                    and
+                    decrements the <code>seconds_remaining</code> variable. This variable is used to determine when
+                    the
+                    game
+                    ends and the <code>gameState</code> changes to <code>GAME_OVER</code>.
+                </p>
             </div>
         </section>
 
         <section id="hardware-design" class="section">
             <div class="container">
                 <h2>Hardware Design</h2>
-                <p>Hardware details. Could someone else build this based on what you have written?</p>
-                <p>Be sure to specifically reference any design or code you used from someone else.
-                    Things you tried which did not work</p>
+                <p>Hardware design of this project revolves around wiring on breadboard and custom game controller PCB
+                    design.
+                </p>
+                <h3>Custom Game Controller PCB Design</h3>
+                <p>
+                    The custom game controller PCB includes three push buttons and a two-axis analog joystick, providing
+                    interactive input for in-game control and selection. Each push button is implemented as a
+                    Single-Pole
+                    Single-Throw (SPST) switch. One leg of the switch is connected to a Raspberry Pi Pico GPIO pin,
+                    while
+                    the other is connected to ground. A 10 kΩ pull-up resistor is connected between each GPIO pin and
+                    the
+                    3.3 V supply, ensuring that the pin reads a logic high when the button is unpressed. When the button
+                    is
+                    pressed, the pin is pulled to ground through a low resistance path, allowing the software to detect
+                    a
+                    logic low. Transitions from high to low are used to trigger actions such as confirming a selection
+                    or
+                    cycling through menus. For Player 1, the Reset, Enter, and Skip buttons are connected to GPIO 2,
+                    GPIO
+                    10, and GPIO 8, respectively. For Player 2, the same functions are wired to GPIO 3, GPIO 11, and
+                    GPIO 9.
+                </p>
+                <p>
+                    Each joystick used in the game controller consists of two internal potentiometers that detect
+                    movement
+                    along the X and Y axes. Hardware wise, each potentiometer acts as a variable resistor wired as a
+                    voltage
+                    divider. One end of the potentiometer connects to 3.3 V (VDD), the other to ground (GND), and the
+                    center
+                    pin providing an output voltage that varies based on the joystick’s position. As the user tilts the
+                    joystick, the resistance between the center pin and each rail changes, resulting in a varying output
+                    voltage. This analog voltage is fed into an external ADC, which converts it into a digital value and
+                    sends it to the Raspberry Pi Pico via I2C.
+                </p>
+                <p>
+                    In software, the joystick input is processed by a function such as <code>joystickSelect()</code>,
+                    which takes in
+                    the
+                    digitized X and Y values and compares them to a defined center position. The function calculates the
+                    difference (delta) between the current reading and the neutral center value. To reduce noise and
+                    prevent
+                    small unintentional movements from being registered, a deadzone threshold is applied. If the
+                    joystick is
+                    tilted far enough beyond this deadzone, the direction is determined by comparing the magnitude of
+                    the X
+                    and Y deviations. If the horizontal movement (delta_x) is greater than the vertical (delta_y), the
+                    function returns UP or DOWN depending on the sign of delta_x. Otherwise, it returns LEFT or RIGHT
+                    based
+                    on delta_y. If the joystick remains near the center, it returns NEUTRAL, indicating no movement.
+                    This
+                    directional output is used in-game for actions such as selecting cards, navigating menus, or moving
+                    between elements.
+                </p>
+                <h3>EEPROM for Persistent Leaderboards</h3>
+                <p>
+                    An external EEPROM chip is used to store leaderboard data, allowing high scores and player names to
+                    remain in memory across power cycles. The EEPROM communicates with the Raspberry Pi Pico over the
+                    I2C protocol, with the SDA and SCL lines connected to GPIO pins 4 and 5, respectively. The EEPROM
+                    operates at the standard 7-bit I2C address 0x50, and write operations are followed by a short delay
+                    to allow internal memory updates to complete.
+                </p>
+                <p>
+                    The software interface for the EEPROM includes functions for reading and writing single bytes,
+                    16-bit integers, and fixed-length names. To manage leaderboard entries, player names and scores are
+                    written sequentially to predefined memory addresses. Each entry consists of a name padded to a fixed
+                    length and a 16-bit score. When a new score is inserted, the <code>insert_score()</code> function
+                    checks existing
+                    entries and shifts lower ranked scores down to make room for higher ones. This maintains a sorted
+                    list of top scores. The EEPROM memory is divided by game mode, allowing separate leaderboards for
+                    different difficulty levels or game types. A helper function also allows full memory erasure for
+                    resetting all stored data.
+                </p>
+                <h3>ADS 1115 for Additional ADCs</h3>
+                <p>
+                    The ADS1115 is a 16-bit external ADC used in this project to monitor joystick positions since two
+                    joysticks require four ADCs. The ADS1115 communicates with the Pico via the I2C protocol, with the
+                    SDA line connected to GPIO 6 and the SCL line connected to GPIO 7. The device operates at a default
+                    I2C address (0x48) and uses an external power supply of 3.3 V, consistent with the Pico’s power
+                    supply.
+                </p>
+                <p>
+                    In software, the joystick input is read using the <code>ads1115_read_single_channel()</code>
+                    function. This
+                    function configures the ADS1115 to operate in single shot mode, where each read triggers a new
+                    conversion. The CONFIG register is set with parameters including the selected input channel
+                    (mux_bits), a ±2.048 V programmable gain amplifier setting for improved resolution, a data rate of
+                    860 samples per second, and the comparator function disabled. After initiating the conversion and
+                    waiting for 2 ms, the function reads the 16-bit result from the ADC’s conversion register. The raw
+                    digital value is then scaled to a range of -4096 to +4096, which is used to interpret joystick
+                    position in the game.
+                </p>
+
+                <h3>MCP4822 DAC</h3>
+                <p>
+                    The MCP4822 DAC converts digital audio signals from the Raspberry Pi Pico into analog output via the
+                    SPI
+                    channel. This analog signal is then played back through a speaker connected to a 3.5 mm audio jack.
+                    The
+                    DAC is powered by the Pico’s 3.3V supply (VDD connected to 3.3VOUT, VSS to GND). SPI connections are
+                    configured as follows: MISO on GPIO 12 (not used by the DAC), Chip Select (CS) on GPIO 13, Serial
+                    Clock
+                    (SCK) on GPIO 14, and MOSI (SDI) on GPIO 15. The analog output from the DAC is connected to the
+                    speaker
+                    for audio playback.
+                </p>
+
+                <h3>VGA Screen</h3>
+                <p>
+                    The VGA display operates at a resolution of 640 x 480 and relies on two digital synchronization
+                    signals, HSYNC and VSYNC, and three analog color channels, RED, GREEN, and BLUE. Pixel updates occur
+                    at a clock rate of 25.172 MHz. Initially, both HSYNC and VSYNC are held high while pixel data is
+                    output through the analog color signals, which range from 0 V to 0.7 V to represent varying
+                    intensities.
+                </p>
+                <p>
+                    Each row of the display is active for 640 pixel clock cycles, followed by a horizontal blanking
+                    interval consisting of 16 cycles for the front porch, 96 for the sync pulse (when HSYNC goes low),
+                    and 48 for the back porch, all during which the analog color outputs are set to 0 V. Once complete,
+                    HSYNC returns high, and the process begins again for the next row. This repeats for 480 rows per
+                    frame. After all rows are drawn, VSYNC initiates a vertical blanking period, 10 lines of front
+                    porch, 2 lines of sync pulse (VSYNC goes low), and 33 lines of back porch, before starting a new
+                    frame.
+                </p>
+                <p>
+                    The Raspberry Pi Pico drives these signals through the following GPIO connections: HSYNC on GPIO 16,
+                    VSYNC on GPIO 17, GREEN on GPIOs 18 (through a 470 Ω resistor) and 19 (through a 330 Ω resistor),
+                    BLUE on GPIO 20 (330 Ω), and RED on GPIO 21 (330 Ω). The VGA input has an internal 70 Ω resistor per
+                    color channel, and the series resistors form voltage dividers to ensure output voltages remain
+                    within the 0 to 0.7 V VGA standard.
+                </p>
+
             </div>
         </section>
 
         <section id="results" class="section">
             <div class="container">
                 <h2>Results</h2>
-                <p>Any and all test data, scope traces, waveforms, etc
-                    speed of execution (hesitation, filcker, interactiveness, concurrency)
-                    accuracy (numeric, music frequencies, video signal timing, etc)
-                    how you enforced safety in the design.
-                    usability by you and other people</p>
+                <p>The results of our project are entirely evaluated by playing the game. The effectiveness of the game
+                    engine is evaluated based on the “feel” of gameplay: responsiveness, apparent smoothness of
+                    animation, proper timing, etc. A notable issue we were unable to resolve, mostly due to time
+                    constraints, is that the characters flickered on the screen when moved. While annoying, we did not
+                    think this hindered player experience enough to be worth fixing since we did not have a clear,
+                    simple solution defined. Otherwise, we were able to implement all character movement and interaction
+                    with the environment as we had originally planned, mostly based on the functionalities of the
+                    original game. Accuracy of sound output is also easy to subjectively evaluate. It is very noticeable
+                    when things sound incorrect. Fortunately, the sound effects and background music in the final game
+                    worked as expected. Visual assets were also subjectively evaluated by ourselves. Since we were not
+                    expressly held to copying designs exactly we could make things look however we wanted.</p>
             </div>
         </section>
 
@@ -236,7 +424,7 @@
 
         <section id="appendix" class="section">
             <div class="container">
-                <h2>Appendix</h2>
+                <h2>Appendicies</h2>
                 <p>appendix</p>
                 <p>P2</p>
             </div>
