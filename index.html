@@ -91,7 +91,28 @@
             <div class="container">
                 <h2>Software Design</h2>
                 <h3>Algorithm for Generating Solutions</h3>
-                <p>Damian</p>
+                <p>The core idea behind the 24-point solver is to exhaustively evaluate all valid arithmetic expressions
+                    formed from a given set of four integers. The algorithm applies the basic operations +, -, *, and /,
+                    and explores all permutations of the numbers (4! = 24), operator combinations (4³ = 64), and six
+                    distinct parenthesis patterns that define evaluation order. Each configuration is numerically
+                    evaluated to check whether it equals 24 (within a small epsilon tolerance), ensuring that all
+                    mathematically valid solutions are captured through brute-force enumeration.
+                    To implement this algorithm, I began with an <a
+                        href=https://github.com/peterwzhang/24-Game-Solver>open-source solver</a> available at
+                    , which determines whether a solution exists for a
+                    given set of four numbers. I then extended the code to output all valid expressions rather than just
+                    confirming existence. Additional improvements included filtering out duplicate solutions, avoiding
+                    intermediate negative values, and counting the number of unique solutions. I also introduced a
+                    difficulty rating system (easy, medium, hard) based on the number and complexity of solutions, and
+                    added functionality to generate random problem sets matching a specified difficulty. These
+                    enhancements made the solver both comprehensive and adaptable for dynamic puzzle generation within
+                    the game.
+                </p>
+                <div style="text-align: center;">
+                    <img src="assets/24 algo.png" alt="mac_address" style="max-width: 50%; height: auto;">
+                    <figcaption>6 different parentheses groupings</figcaption>
+                </div>
+                <br>
 
                 <h3>Efficiently Drawing Images to the VGA Screen</h3>
                 <p>
