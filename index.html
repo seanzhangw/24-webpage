@@ -98,7 +98,7 @@
                     evaluated to check whether it equals 24 (within a small epsilon tolerance), ensuring that all
                     mathematically valid solutions are captured through brute-force enumeration.
                     To implement this algorithm, I began with an <a
-                        href=https://github.com/peterwzhang/24-Game-Solver>open-source solver</a> available at
+                        href=https://github.com/peterwzhang/24-Game-Solver>open-source solver</a>
                     , which determines whether a solution exists for a
                     given set of four numbers. I then extended the code to output all valid expressions rather than just
                     confirming existence. Additional improvements included filtering out duplicate solutions, avoiding
@@ -168,6 +168,7 @@
                         style="object-fit: cover; object-position: top; height: 350px; width: auto; clip-path: inset(15% 0 0 0);">
                 </div>
                 <figcaption>Flip Animation</figcaption>
+                <br>
                 <p>
                     The trapezoid is split into the upper right triangle, lower right triangle, and the central
                     rectangle. Parameters such as the height of the left and right bases and the width of the trapezoid,
@@ -188,6 +189,7 @@
                     <img src="assets/flip_visualized_grid.drawio.png" alt="mac_address"
                         style="max-width: 50%; height: auto;">
                     <figcaption>Drawing Top Triangle and Flip Parameters</figcaption>
+                    <br>
                 </div>
                 <p>
                     The middle rectangle is drawn with the line
@@ -203,6 +205,7 @@
                 </p>
                 <script src="https://gist.github.com/seanzhangw/a22cfcbb26e40e85151f638b2ffa4106.js"></script>
                 <figcaption>Drawing Bottom Triangle Code</figcaption>
+                <br>
 
                 <p>
                     During the second half of the flip, the same logic largely applies. The right base of the trapezoid
@@ -269,6 +272,7 @@
                     <img src="assets/24-final-sw-logc.png" alt="mac_address" style="max-width: 100%; height: auto;">
                     <figcaption>Code Organization</figcaption>
                 </div>
+                <br>
                 <p>
                     The input thread in each core is responsible for reading the joystick inputs and button presses.
                     Debouncing is implemented to make button presses and joystick inputs more reliable.
@@ -579,7 +583,7 @@
                 <p>Datasheets & Documentation
                 <ul>
                     <li>RP2040 C SDK: <a
-                            href="https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf">Datasheet</a>
+                            href="https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf">SDK</a>
                     </li>
                     <li>RP2040 Datasheet: <a
                             href="https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf">Datasheet</a>
@@ -588,7 +592,9 @@
                 </p>
                 <p>Other References</p>
                 <ul>
-                    <li>24 Solver: <a href="http://24solver.us-west-2.elasticbeanstalk.com/">Link</a></li>
+                    <li>online 24 Solver: <a href="http://24solver.us-west-2.elasticbeanstalk.com/">Link1</a></li>
+                    <li>open-source 24 solver algorithm: <a href=https://github.com/peterwzhang/24-Game-Solver>Link2</a>
+                    </li>
                 </ul>
             </div>
         </section>
