@@ -42,7 +42,8 @@
         <section id=" introduction" class="section">
             <div class="container">
                 <h2>Project Introduction</h2>
-                <p>Our digital recreation of the Game of 24 brings the classic arcade experience with a custom interface that
+                <p>Our digital recreation of the Game of 24 brings the classic arcade experience with a custom interface
+                    that
                     blends nostalgic gameplay with a custom built, user-experience focused design.</p>
                 <p>The Game of 24 is a classic mathematical puzzle where players must use four given numbers and basic
                     arithmetic operations (+, -, *, /) to form an expression that equals 24. Traditionally the game is
@@ -97,9 +98,9 @@
                     distinct parenthesis patterns that define evaluation order. Each configuration is numerically
                     evaluated to check whether it equals 24 (within a small epsilon tolerance), ensuring that all
                     mathematically valid solutions are captured through brute-force enumeration.
-                    To implement this algorithm, I began with an <a
-                        href=https://github.com/peterwzhang/24-Game-Solver>open-source solver</a>
-                    , which determines whether a solution exists for a
+                    To implement this algorithm, we began with an <a
+                        href=https://github.com/peterwzhang/24-Game-Solver>open-source solver</a>, which determines
+                    whether a solution exists for a
                     given set of four numbers. I then extended the code to output all valid expressions rather than just
                     confirming existence. Additional improvements included filtering out duplicate solutions, avoiding
                     intermediate negative values, and counting the number of unique solutions. I also introduced a
@@ -331,12 +332,16 @@
             <div class="container">
                 <h2>Hardware Design</h2>
                 <p>
-                This section details the hardware design of our Game of 24 system, which brings together multiple elements 
-                to support real-time gameplay and user interaction. The Raspberry Pi Pico serves as the central controller, 
-                interfacing with external peripherals including a DAC for audio output, a VGA display for graphics, an 
-                    ADS1115 ADC for reading joystick input, and an EEPROM chip for persistent leaderboard storage. 
-                    A custom game controller PCB connects to the system via GPIO, providing buttons and a joystick for player 
-                    input. 
+                    This section details the hardware design of our Game of 24 system, which brings together multiple
+                    elements
+                    to support real-time gameplay and user interaction. The Raspberry Pi Pico serves as the central
+                    controller,
+                    interfacing with external peripherals including a DAC for audio output, a VGA display for graphics,
+                    an
+                    ADS1115 ADC for reading joystick input, and an EEPROM chip for persistent leaderboard storage.
+                    A custom game controller PCB connects to the system via GPIO, providing buttons and a joystick for
+                    player
+                    input.
                     A full schematic of the hardware setup is shown below for reference.
                 </p>
                 <div style="text-align: center;">
@@ -492,12 +497,13 @@
                     how you enforced safety in the design.
                     usability by you and other people</p> -->
                 <p>
-                    The final implementation of the Game of 24 was functionally complete and responsive, 
-                    with smooth user interaction and correct hardware behavior. The VGA display 
-                    maintained proper timing and resolution, with no visible flickering or 
-                    tearing during rapid updates. Real-time drawing of numbers, selection movement, and 
-                    leaderboard display were stable and free of graphical artifacts. Button presses and joystick 
-                    movements were detected with minimal latency, contributing to a smooth and interactive gameplay experience.
+                    The final implementation of the Game of 24 was functionally complete and responsive,
+                    with smooth user interaction and correct hardware behavior. The VGA display
+                    maintained proper timing and resolution, with no visible flickering or
+                    tearing during rapid updates. Real-time drawing of numbers, selection movement, and
+                    leaderboard display were stable and free of graphical artifacts. Button presses and joystick
+                    movements were detected with minimal latency, contributing to a smooth and interactive gameplay
+                    experience.
                 </p>
                 <p>
                     The success of our implementation of the Game of 24 project is primarily evaluated through direct
@@ -524,12 +530,12 @@
                     Appendix E). Each of our generated solutions was verified to be solvable with a set number of
                     solutions that matched the difficulty level.
                 </p>
-                 <p>
-                    Safety and robustness were considered in both software and hardware. Pull-up resistors on 
-                    all input lines prevented floating GPIOs, and debouncing logic helped avoid accidental multiple 
-                    triggers. All analog signals (VGA and joystick) were constrained within voltage ranges safe 
-                    for the Pico and external devices. Usability testing mainly by the team and friends showed 
-                    that users could intuitively understand the input system and play with the game without needing 
+                <p>
+                    Safety and robustness were considered in both software and hardware. Pull-up resistors on
+                    all input lines prevented floating GPIOs, and debouncing logic helped avoid accidental multiple
+                    triggers. All analog signals (VGA and joystick) were constrained within voltage ranges safe
+                    for the Pico and external devices. Usability testing mainly by the team and friends showed
+                    that users could intuitively understand the input system and play with the game without needing
                     technical background, proving the design's usability.
                 </p>
             </div>
@@ -543,7 +549,7 @@
                     and feature-rich experience. Beyond the core game mechanics, we successfully implemented several
                     expansion features, including a persistent leaderboard stored in non-volatile memory, smooth
                     animations for card sliding and flipping, and a relative scoring system that adjusts based on game
-                    difficulty. The system handled two-player input concurrently with no noticeable latency or flicker, 
+                    difficulty. The system handled two-player input concurrently with no noticeable latency or flicker,
                     contributing to an overall polished and arcade-like experience.
                 </p>
                 <p> If we were to revisit this project, we would focus on further expanding the gameplay features. Some
@@ -552,10 +558,10 @@
                     as audio cues for successfully finding a solution or performing an operation, taking advantage of
                     the available flash memory. Additionally, we could explore new game modes, such as a challenge mode
                     where players compete to solve a set number of puzzles in the fastest time, offering a more diverse
-                    gameplay experience beyond the current time-based format. </p>   
+                    gameplay experience beyond the current time-based format. </p>
                 <p>
-                    As for intellectual property, we did not reuse any code or designs from other sources.
-                </p>
+                    As for intellectual property, we based our 24 solver algorithm on an existing open-source solution,
+                    which we modified to suit our project’s needs. </p>
             </div>
         </section>
 
@@ -626,8 +632,8 @@
                 </p>
                 <p>Other References</p>
                 <ul>
-                    <li>online 24 Solver: <a href="http://24solver.us-west-2.elasticbeanstalk.com/">Link1</a></li>
-                    <li>open-source 24 solver algorithm: <a href=https://github.com/peterwzhang/24-Game-Solver>Link2</a>
+                    <li>Online 24 Solver: <a href="http://24solver.us-west-2.elasticbeanstalk.com/">Link1</a></li>
+                    <li>Open-Source 24 Solver Algorithm: <a href=https://github.com/peterwzhang/24-Game-Solver>Link2</a>
                     </li>
                 </ul>
             </div>
