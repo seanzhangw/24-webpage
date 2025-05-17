@@ -330,7 +330,19 @@
         <section id="hardware-design" class="section">
             <div class="container">
                 <h2>Hardware Design</h2>
-
+                <p>
+                This section details the hardware design of our Game of 24 system, which brings together multiple elements 
+                to support real-time gameplay and user interaction. The Raspberry Pi Pico serves as the central controller, 
+                interfacing with external peripherals including a DAC for audio output, a VGA display for graphics, an 
+                    ADS1115 ADC for reading joystick input, and an EEPROM chip for persistent leaderboard storage. 
+                    A custom game controller PCB connects to the system via GPIO, providing buttons and a joystick for player 
+                    input. 
+                    A full schematic of the hardware setup is shown below for reference.
+                </p>
+                <div style="text-align: center;">
+                    <img src="assets/circuit_schematics.png" mac_address" style="max-width: 50%; height: auto;">
+                    <figcaption>Hardware Schematics</figcaption>
+                </div>
                 <h3>Custom Game Controller PCB Design</h3>
                 <p>
                     The custom game controller PCB includes three push buttons and a two-axis analog joystick, providing
