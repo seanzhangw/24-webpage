@@ -42,13 +42,13 @@
         <section id=" introduction" class="section">
             <div class="container">
                 <h2>Project Introduction</h2>
-                <p>Our recreation of the Game of 24 recreates the classic arcade experience with a custom interface that
-                    blends nostalgic gameplay with a user-experience focused design.</p>
+                <p>Our digital recreation of the Game of 24 brings the classic arcade experience with a custom interface that
+                    blends nostalgic gameplay with a custom built, user-experience focused design.</p>
                 <p>The Game of 24 is a classic mathematical puzzle where players must use four given numbers and basic
                     arithmetic operations (+, -, *, /) to form an expression that equals 24. Traditionally the game is
                     played with a deck of cards, where each turn the players will draw four random cards and compete for
                     the fastest speed to calculate to 24. Instead of racing to solve a single round, our implementation
-                    tracks the number of collections solved within a configurable time interval.</p>
+                    tracks the number of collections of cards solved within a configurable time interval.</p>
                 <p>The arcade experience is curated with a custom built joystick-based
                     controller, retro-style graphics with the VGA screen, and a persistent leaderboard stored in
                     non-volatile memory. The game is player vs player similar to the
@@ -471,7 +471,14 @@
                     accuracy (numeric, music frequencies, video signal timing, etc)
                     how you enforced safety in the design.
                     usability by you and other people</p> -->
-
+                <p>
+                    The final implementation of the Game of 24 was functionally complete and responsive, 
+                    with smooth user interaction and correct hardware behavior. The VGA display 
+                    maintained proper timing and resolution, with no visible flickering or 
+                    tearing during rapid updates. Real-time drawing of numbers, selection movement, and 
+                    leaderboard display were stable and free of graphical artifacts. Button presses and joystick 
+                    movements were detected with minimal latency, contributing to a smooth and interactive gameplay experience.
+                </p>
                 <p>
                     The success of our implementation of the Game of 24 project is primarily evaluated through direct
                     gameplay. We assessed the game based on the responsiveness of player input, the
@@ -492,11 +499,18 @@
                     to the
                     arcade-like atmosphere of the game.
                 </p>
-
                 <p>
                     We validated that we generated valid solutions of a set difficulty using an online 24 solver (see
                     Appendix E). Each of our generated solutions was verified to be solvable with a set number of
                     solutions that matched the difficulty level.
+                </p>
+                 <p>
+                    Safety and robustness were considered in both software and hardware. Pull-up resistors on 
+                    all input lines prevented floating GPIOs, and debouncing logic helped avoid accidental multiple 
+                    triggers. All analog signals (VGA and joystick) were constrained within voltage ranges safe 
+                    for the Pico and external devices. Usability testing mainly by the team and friends showed 
+                    that users could intuitively understand the input system and play with the game without needing 
+                    technical background, proving the design's usability.
                 </p>
             </div>
         </section>
@@ -509,7 +523,8 @@
                     and feature-rich experience. Beyond the core game mechanics, we successfully implemented several
                     expansion features, including a persistent leaderboard stored in non-volatile memory, smooth
                     animations for card sliding and flipping, and a relative scoring system that adjusts based on game
-                    difficulty.
+                    difficulty. The system handled two-player input concurrently with no noticeable latency or flicker, 
+                    contributing to an overall polished and arcade-like experience.
                 </p>
                 <p> If we were to revisit this project, we would focus on further expanding the gameplay features. Some
                     potential enhancements include a "hint" system that shakes a couple of cards or highlights a
@@ -517,8 +532,7 @@
                     as audio cues for successfully finding a solution or performing an operation, taking advantage of
                     the available flash memory. Additionally, we could explore new game modes, such as a challenge mode
                     where players compete to solve a set number of puzzles in the fastest time, offering a more diverse
-                    gameplay experience beyond the current time-based format. </p>
-
+                    gameplay experience beyond the current time-based format. </p>   
                 <p>
                     As for intellectual property, we did not reuse any code or designs from other sources.
                 </p>
